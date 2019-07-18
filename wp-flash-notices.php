@@ -106,11 +106,13 @@ class WP_Flash_Notices {
 		/**
 		 * Filter hook to modify notice item before adding to queue.
 		 *
-		 * @param array $notice Notice item.
+		 * @param string $key       Notice key.
+		 * @param array  $notice    Notice item.
+		 * @param string $transient Transient name to identify the plugin.
 		 *
 		 * @since 1.0.0
 		 */
-		apply_filters( 'wp_flash_notices_notice_item', $notice );
+		apply_filters( 'wp_flash_notices_notice_item', $key, $notice, $this->transient );
 
 		// Multisite network admin notices.
 		if ( is_multisite() && $network ) {
@@ -126,14 +128,16 @@ class WP_Flash_Notices {
 		 * Note: The notice item is not yet added to the transient when this
 		 * action hook is fired.
 		 *
-		 * @param array $notice          Notice item inserted.
-		 * @param array $notices         Current notice queue.
-		 * @param array $network_notices Current network notices queue.
+		 * @param array  $notice          Notice item inserted.
+		 * @param string $transient       Transient name to identify the plugin.
+		 * @param array  $notices         Current notice queue.
+		 * @param array  $network_notices Current network notices queue.
 		 *
 		 * @since 1.0.0
 		 */
 		do_action( 'wp_flash_notices_after_queue_insert',
 			$notice,
+			$this->transient,
 			$this->notices,
 			$this->network_notices
 		);
@@ -163,12 +167,14 @@ class WP_Flash_Notices {
 		/**
 		 * Action hook fired after saving queued notices to transient.
 		 *
-		 * @param array $notices         Notice queue.
-		 * @param array $network_notices Network notices queue.
+		 * @param string $transient       Transient name to identify the plugin.
+		 * @param array  $notices         Notice queue.
+		 * @param array  $network_notices Network notices queue.
 		 *
 		 * @since 1.0.0
 		 */
 		do_action( 'wp_flash_notices_after_save',
+			$this->transient,
 			$this->notices,
 			$this->network_notices
 		);
@@ -193,13 +199,19 @@ class WP_Flash_Notices {
 		/**
 		 * Filter hook to modify the notice item.
 		 *
-		 * @param array $notice  Current notice.
-		 * @param array $notices Notice list.
-		 * @param bool  $network Is network notice?.
+		 * @param array  $notice    Current notice.
+		 * @param string $transient Transient name to identify the plugin.
+		 * @param array  $notices   Notice list.
+		 * @param bool   $network   Is network notice?.
 		 *
 		 * @since 1.0.0
 		 */
-		return apply_filters( 'wp_flash_notices_get', $notice, $notices, $network );
+		return apply_filters( 'wp_flash_notices_get',
+			$notice,
+			$this->transient,
+			$notices,
+			$network
+		);
 	}
 
 	/**
@@ -223,12 +235,17 @@ class WP_Flash_Notices {
 		/**
 		 * Filter hook to modify the fetched notices array.
 		 *
-		 * @param array $notices Notice list.
-		 * @param bool  $network Is network notice?.
+		 * @param string $transient Transient name to identify the plugin.
+		 * @param array  $notices   Notice list.
+		 * @param bool   $network   Is network notice?.
 		 *
 		 * @since 1.0.0
 		 */
-		return apply_filters( 'wp_flash_notices_fetch', $notices, $network );
+		return apply_filters( 'wp_flash_notices_fetch',
+			$this->transient,
+			$notices,
+			$network
+		);
 	}
 
 	/**
@@ -253,11 +270,12 @@ class WP_Flash_Notices {
 		/**
 		 * Action hook fired after clearing notices from transient.
 		 *
-		 * @param bool $network Network notice?.
+		 * @param string $transient Transient name to identify the plugin.
+		 * @param bool   $network   Network notice?.
 		 *
 		 * @since 1.0.0
 		 */
-		do_action( 'wp_flash_notices_after_clear', $network );
+		do_action( 'wp_flash_notices_after_clear', $this->transient, $network );
 	}
 
 	/**
@@ -278,11 +296,12 @@ class WP_Flash_Notices {
 		/**
 		 * Filter hook to disable auto rendering of admin notices.
 		 *
-		 * @param bool $enable Should render.
+		 * @param bool   $enable    Should render.
+		 * @param string $transient Transient name to identify the plugin.
 		 *
 		 * @since 1.0.0
 		 */
-		if ( apply_filters( 'wp_flash_notices_auto_render', true ) ) {
+		if ( apply_filters( 'wp_flash_notices_auto_render', true, $this->transient ) ) {
 			$network = is_network_admin();
 
 			// Get all notices.
@@ -316,12 +335,17 @@ class WP_Flash_Notices {
 			 *
 			 * We are using this hook to clear all notices after rendering.
 			 *
-			 * @param array $notices Notices array.
-			 * @param bool  $network Is network admin?.
+			 * @param string $transient Transient name to identify the plugin.
+			 * @param array  $notices   Notices array.
+			 * @param bool   $network   Is network admin?.
 			 *
 			 * @since 1.0.0
 			 */
-			do_action( 'wp_flash_notices_after_render', $notices, $network );
+			do_action( 'wp_flash_notices_after_render',
+				$this->transient,
+				$notices,
+				$network
+			);
 		}
 	}
 
@@ -345,11 +369,12 @@ class WP_Flash_Notices {
 		 * notices using `clear` method. Otherwise notices will be there
 		 * and there no point in using this library anymore.
 		 *
-		 * @param bool $enable Should clear automatically after render?.
+		 * @param bool   $enable    Should clear automatically after render?.
+		 * @param string $transient Transient name to identify the plugin.
 		 *
 		 * @since 1.0.0
 		 */
-		if ( apply_filters( 'wp_flash_notices_auto_clear', true ) ) {
+		if ( apply_filters( 'wp_flash_notices_auto_clear', true, $this->transient ) ) {
 			// Clear all notices.
 			$this->clear( $network );
 		}
