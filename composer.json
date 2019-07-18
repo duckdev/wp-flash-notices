@@ -1,0 +1,30 @@
+{
+  "name": "duckdev/wp-flash-notices",
+  "description": "WordPress admin notices as flash notice using transient API to display after page reload.",
+  "license": "GPL-2.0+",
+  "authors": [
+    {
+      "name": "Joel James",
+      "email": "me@joelsays.com",
+      "homepage": "https://duckdev.com"
+    }
+  ],
+  "keywords": [
+    "wordpress",
+    "notices",
+    "persistent",
+    "transient",
+    "admin-notices"
+  ],
+  "support": {
+    "issues": "https://github.com/DuckDev/wp-flash-notices/issues/"
+  },
+  "require": {
+    "php": ">=5.4"
+  },
+  "autoload": {
+    "classmap": [
+      "wp-flash-notices.php"
+    ]
+  }
+}
