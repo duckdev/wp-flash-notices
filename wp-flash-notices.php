@@ -64,9 +64,23 @@ class WP_Flash_Notices {
 	 *
 	 * @since 1.0.0
 	 */
-	public function __construct( $transient = 'jj_wp_flash_notices' ) {
+	public function __construct( $transient = 'duckdev_wp_flash_notices' ) {
 		// Make sure you set this unique, otherwise all notices will mixup.
 		$this->transient = $transient;
+
+		/**
+		 * Filter hook to add new notice types.
+		 *
+		 * @param array  $types     Notice types (default wp notices).
+		 * @param string $transient Transient name.
+		 *
+		 * @since 1.0.1
+		 */
+		$this->types = apply_filters(
+			'wp_flash_notices_notice_types',
+			$this->types,
+			$this->transient
+		);
 
 		// Render notices using WP action.
 		add_action( 'admin_notices', [ $this, 'render' ] );

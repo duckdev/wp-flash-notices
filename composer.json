@@ -1,6 +1,7 @@
 {
   "name": "duckdev/wp-flash-notices",
   "description": "WordPress admin notices as flash notice using transient API to display after page reload.",
+  "version": "1.0.1",
   "license": "GPL-2.0+",
   "authors": [
     {
