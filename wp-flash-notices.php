@@ -84,6 +84,7 @@ class WP_Flash_Notices {
 
 		// Render notices using WP action.
 		add_action( 'admin_notices', [ $this, 'render' ] );
+		add_action( 'front_notices', [ $this, 'render' ] );
 		add_action( 'network_admin_notices', [ $this, 'render' ] );
 
 		// Save all queued notices to transient.
