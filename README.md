@@ -83,9 +83,9 @@ $notices->add( 'custom-success', 'This is a custom dismissible notice.', 'succes
 ```
 
 
-### Frontend compatibility
+### Frontend Compatibility
 If you'd like to print the notices in the front-end, then use the below action to your template. 
 
 ```php
-do_action('front_notices');
+do_action( 'front_notices' );
 ```
