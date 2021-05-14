@@ -81,3 +81,11 @@ By default all notices are shown within single site admin screens. If you have M
 // Register new info notice to the queue.
 $notices->add( 'custom-success', 'This is a custom dismissible notice.', 'success', true, true );
 ```
+
+
+### Frontend compatibility
+If you'd like to print the notices in the front-end, then use the below action to your template. 
+
+```php
+do_action('front_notices');
+```

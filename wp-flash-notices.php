@@ -84,6 +84,7 @@ class WP_Flash_Notices {
 
 		// Render notices using WP action.
 		add_action( 'admin_notices', [ $this, 'render' ] );
+		add_action( 'front_notices', [ $this, 'render' ] );
 		add_action( 'network_admin_notices', [ $this, 'render' ] );
 
 		// Save all queued notices to transient.
@@ -249,15 +250,15 @@ class WP_Flash_Notices {
 		/**
 		 * Filter hook to modify the fetched notices array.
 		 *
-		 * @param string $transient Transient name to identify the plugin.
 		 * @param array  $notices   Notice list.
+         * @param string $transient Transient name to identify the plugin.
 		 * @param bool   $network   Is network notice?.
 		 *
 		 * @since 1.0.0
 		 */
 		return apply_filters( 'wp_flash_notices_fetch',
-			$this->transient,
 			$notices,
+			$this->transient,
 			$network
 		);
 	}
