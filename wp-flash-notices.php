@@ -251,7 +251,7 @@ class WP_Flash_Notices {
 		 * Filter hook to modify the fetched notices array.
 		 *
 		 * @param array  $notices   Notice list.
-         * @param string $transient Transient name to identify the plugin.
+        	 * @param string $transient Transient name to identify the plugin.
 		 * @param bool   $network   Is network notice?.
 		 *
 		 * @since 1.0.0
